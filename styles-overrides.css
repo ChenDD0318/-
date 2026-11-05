@@ -2826,3 +2826,263 @@ main#top > #download { order: 6; }
 
 /* 页脚（浅色背景上下文）中的字标用深色版本 */
 .site-footer .brand-wordmark, .site-footer .footer-wordmark { filter: brightness(0) saturate(100%) invert(95%) sepia(4%) saturate(194%) hue-rotate(185deg) brightness(105%) contrast(96%); }
+
+/* ============================================================
+   艺术化改版 2026-11-05
+   浏览方式：指挥棒光标 · 键盘画廊 · 磁吸按钮 · 板块进度
+   七模块：柔和边缘 · 概览态标题 · 精致排版
+   Duo/Sonder 差异化：深色画布剧场 × 浅色生成画廊
+   ============================================================ */
+
+/* ---------- 1. 指挥棒光标：跟随的小光环，悬停交互元素时放大 ---------- */
+.zx-baton {
+  position: fixed;
+  z-index: 2147483200;
+  width: 34px;
+  height: 34px;
+  border: 1.5px solid rgba(255, 255, 255, .55);
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  transition: width .3s var(--zx-ease), height .3s var(--zx-ease),
+    border-color .3s ease, background .3s ease, opacity .4s ease;
+  mix-blend-mode: difference;
+  opacity: 0;
+}
+.zx-baton.is-live { opacity: 1; }
+.zx-baton.is-hover {
+  width: 58px;
+  height: 58px;
+  background: rgba(255, 255, 255, .14);
+  border-color: rgba(255, 255, 255, .9);
+}
+@media (hover: none), (pointer: coarse) { .zx-baton { display: none; } }
+
+/* ---------- 2. 板块进度点（右侧） ---------- */
+.zx-rail {
+  position: fixed;
+  right: 22px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 900;
+  display: grid;
+  gap: 14px;
+  opacity: 0;
+  transition: opacity .6s ease;
+}
+body.zx-rail-on .zx-rail { opacity: 1; }
+.zx-rail a {
+  position: relative;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(140, 140, 150, .4);
+  transition: transform .35s var(--zx-ease), background .35s ease;
+}
+.zx-rail a::after {
+  content: attr(data-label);
+  position: absolute;
+  right: 22px;
+  top: 50%;
+  transform: translateY(-50%) translateX(6px);
+  font-size: 12px;
+  letter-spacing: .06em;
+  color: rgba(245, 245, 247, .85);
+  background: rgba(10, 10, 14, .72);
+  backdrop-filter: blur(10px);
+  padding: 5px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, .1);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .3s ease, transform .35s var(--zx-ease);
+}
+.zx-rail a:hover::after { opacity: 1; transform: translateY(-50%) translateX(0); }
+.zx-rail a.is-active { background: #fff; transform: scale(1.45); }
+.zx-rail.on-light a { background: rgba(20, 20, 30, .28); }
+.zx-rail.on-light a.is-active { background: #1d1d1f; }
+@media (max-width: 860px) { .zx-rail { display: none; } }
+
+/* ---------- 3. 键盘画廊提示 ---------- */
+.zx-keys-hint {
+  position: fixed;
+  left: 50%;
+  bottom: 26px;
+  transform: translateX(-50%) translateY(12px);
+  z-index: 900;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  font-size: 12.5px;
+  letter-spacing: .05em;
+  color: rgba(245, 245, 247, .72);
+  background: rgba(10, 10, 14, .6);
+  border: 1px solid rgba(255, 255, 255, .1);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  padding: 9px 18px;
+  border-radius: 999px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .5s ease, transform .5s var(--zx-ease);
+}
+.zx-keys-hint.is-live { opacity: 1; transform: translateX(-50%) translateY(0); }
+.zx-keys-hint kbd {
+  font-family: inherit;
+  font-size: 12px;
+  border: 1px solid rgba(255, 255, 255, .28);
+  border-bottom-width: 2px;
+  border-radius: 6px;
+  padding: 1px 7px;
+  background: rgba(255, 255, 255, .07);
+}
+@media (hover: none), (max-width: 860px) { .zx-keys-hint { display: none; } }
+
+/* ---------- 4. 磁吸按钮微交互 ---------- */
+.pill, .hero-download, .dl-card .hero-download { will-change: transform; }
+
+/* ---------- 5. 七模块区：柔和边缘 + 完成度排版 ---------- */
+.zx-modules .tour-media {
+  border-radius: 32px !important;
+  border: 1px solid rgba(255, 255, 255, .1) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, .14),
+    0 34px 90px rgba(10, 10, 20, .45) !important;
+  background: linear-gradient(160deg, #17181d, #0b0b0f 70%) !important;
+}
+.zx-modules .tour-media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(115deg, rgba(255, 255, 255, .09), transparent 34%);
+  pointer-events: none;
+  z-index: 2;
+}
+.zx-modules .tour-media img { transition: opacity .6s ease, transform .9s var(--zx-ease); }
+
+/* 概览态（未点开模块）：显示居中的引导标题，不再单调 */
+.zx-modules .tour-media .media-caption { transition: opacity .5s ease, transform .6s var(--zx-ease); }
+.zx-modules .tour:not(.is-feature-open) .media-caption {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px;
+  background: linear-gradient(180deg, rgba(8, 8, 12, .18), rgba(8, 8, 12, .55));
+  z-index: 3;
+}
+.zx-modules .tour:not(.is-feature-open) .media-caption #feature-title {
+  font-size: clamp(26px, 3vw, 40px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin-bottom: 14px;
+}
+.zx-modules .tour:not(.is-feature-open) .media-caption #feature-copy {
+  font-size: 15px;
+  line-height: 1.8;
+  color: rgba(245, 245, 247, .72);
+  max-width: 460px;
+}
+.zx-modules .tour:not(.is-feature-open) .media-caption::before {
+  content: '点按左侧任意模块，预览它在画布上的样子';
+  font-size: 12.5px;
+  letter-spacing: .22em;
+  color: rgba(245, 245, 247, .45);
+  margin-bottom: 26px;
+  text-transform: uppercase;
+}
+
+/* 七模块控制钮：柔和药丸 + 悬浮呼吸 */
+.zx-modules .tour-control {
+  transition: transform .4s var(--zx-ease), background .4s ease, border-color .4s ease, box-shadow .4s ease !important;
+}
+.zx-modules .tour-control:hover {
+  transform: translateX(6px) scale(1.015);
+  border-color: rgba(255, 255, 255, .42) !important;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, .28);
+}
+.zx-modules .tour-control:active { transform: translateX(6px) scale(.985); }
+
+/* ---------- 6. Duo 深色区：画布剧场的纵深感 ---------- */
+.band-dark {
+  background:
+    radial-gradient(58% 44% at 50% 0%, rgba(41, 151, 255, .13), transparent 62%),
+    radial-gradient(38% 30% at 84% 68%, rgba(125, 76, 255, .09), transparent 66%),
+    #000;
+}
+.band-dark .band-tile strong { letter-spacing: 0.01em; }
+.band-dark .band-media video { filter: saturate(1.08); }
+
+/* ---------- 7. Sonder 浅色区：生成画廊（媒体带边框光影） ---------- */
+.band-light .band-media {
+  border-radius: 30px 30px 0 0;
+  border: 1px solid rgba(0, 0, 0, .06);
+  border-bottom: 0;
+  background: #fff;
+}
+.band-light .band-media img { filter: saturate(1.05); }
+
+/* ---------- 8. 板块间光影过渡（消除生硬分界） ---------- */
+.zx-pair { box-shadow: inset 0 -90px 120px -70px rgba(10, 10, 18, .16); }
+.band-dark { box-shadow: inset 0 90px 120px -80px rgba(0, 0, 0, .9); }
+.zx-modules { box-shadow: inset 0 90px 130px -80px rgba(10, 10, 18, .12); }
+.zx-craft { box-shadow: inset 0 90px 130px -80px rgba(0, 0, 0, .85); }
+
+/* 七模块区：媒体画布归位到右栏，概览态不再溢出 */
+.zx-modules .tour-media {
+  grid-column: 2 !important;
+  grid-row: 1 !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 560px !important;
+  margin-left: 0 !important;
+}
+.zx-modules .tour-media img { border-radius: 32px; }
+.zx-modules .tour-controls { position: relative; z-index: 4; }
+
+/* 概览态：图片压低，居中标题层覆盖 */
+.zx-modules .tour:not(.is-feature-open) .tour-media img { opacity: .38; filter: saturate(.8) brightness(.75); }
+.zx-modules .tour:not(.is-feature-open) .media-caption::before {
+  content: '点按左侧任意模块，预览它在画布上的样子';
+  display: block;
+  font-size: 12px;
+  letter-spacing: .26em;
+  color: rgba(245, 245, 247, .5);
+  margin-bottom: 24px;
+}
+
+/* 七模块区：媒体画布回归文档流（覆盖旧版 absolute 全幅定位） */
+.zx-modules .tour-media {
+  position: relative !important;
+  inset: auto !important;
+  left: auto !important;
+  right: auto !important;
+  top: auto !important;
+  bottom: auto !important;
+}
+.zx-modules .tour-controls { align-self: center; }
+
+/* 七模块区：修正媒体画布与控制钮（旧规则 display:block + 绝对定位冲突） */
+.zx-modules .tour-grid { display: grid !important; grid-template-columns: minmax(270px, 330px) minmax(0, 1fr) !important; gap: 56px !important; min-height: 0 !important; padding: 0 !important; align-items: center !important; }
+.zx-modules .tour-controls { position: static !important; transform: none !important; width: 100% !important; z-index: 4; display: grid; gap: 10px; }
+.zx-modules .tour-control.is-active { transform: translateX(10px) scale(1.01) !important; }
+.zx-modules .tour.is-feature-open .tour-control.is-active { transform: translateX(10px) scale(1.01) !important; }
+.zx-modules .tour-media { height: clamp(560px, 68vh, 720px) !important; min-height: 560px !important; overflow: hidden; }
+.zx-modules .tour-media img { mask-image: none !important; -webkit-mask-image: none !important; }
+.zx-modules .tour.is-feature-open .media-caption { left: clamp(24px, 4vw, 48px) !important; right: clamp(24px, 4vw, 48px) !important; bottom: clamp(24px, 4vh, 44px) !important; }
+.zx-modules .tour-close { border-radius: 999px !important; width: auto !important; padding: 0 18px !important; font-size: 13px !important; height: 38px !important; }
+@media (max-width: 900px) {
+  .zx-modules .tour-grid { grid-template-columns: 1fr !important; gap: 24px !important; }
+  .zx-modules .tour-media { height: clamp(320px, 52vh, 480px) !important; min-height: 320px !important; }
+}
+
+/* 概览态标题居中压暗图（媒体画布回归 grid 后恢复覆盖） */
+.zx-modules .tour:not(.is-feature-open) .media-caption { z-index: 3; }
+/* 展开态的浅卡片里，指挥棒光标改用普通黑圈，避免 difference 反白 */
+.zx-modules .tour-control.is-active ~ * .zx-baton { mix-blend-mode: normal; }

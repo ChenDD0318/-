@@ -538,3 +538,129 @@ qsa('.dl-card .hero-download').forEach(link => link.addEventListener('click', e 
   void link.offsetWidth;
   link.classList.add('zx-pop');
 }));
+
+/* ============================================================
+   艺术化交互层
+   指挥棒光标 · 键盘画廊 · 磁吸按钮 · 板块进度点
+   ============================================================ */
+
+/* ---------- 1. 指挥棒光标（mix-blend difference，全场合适配） ---------- */
+(() => {
+  if (matchMedia('(hover: none), (pointer: coarse)').matches) return;
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const baton = document.createElement('div');
+  baton.className = 'zx-baton';
+  baton.setAttribute('aria-hidden', 'true');
+  document.body.appendChild(baton);
+  let bx = innerWidth / 2, by = innerHeight / 2, tx = bx, ty = by, live = false;
+  addEventListener('pointermove', e => {
+    tx = e.clientX; ty = e.clientY;
+    if (!live) { live = true; baton.classList.add('is-live'); bx = tx; by = ty; }
+    const hit = e.target.closest('a,button,.duo-card,.band-tile,.highlight-card,.tour-control,[role="button"]');
+    baton.classList.toggle('is-hover', !!hit);
+  }, { passive: true });
+  document.addEventListener('mouseleave', () => { live = false; baton.classList.remove('is-live'); });
+  (function loop() {
+    bx += (tx - bx) * .16;
+    by += (ty - by) * .16;
+    baton.style.left = bx + 'px';
+    baton.style.top = by + 'px';
+    requestAnimationFrame(loop);
+  })();
+})();
+
+/* ---------- 2. 键盘画廊：↑ ↓ 或 J / K 在板块间跳跃 ---------- */
+(() => {
+  const sections = qsa('main#top > section[id]');
+  if (sections.length < 2) return;
+  const hint = document.createElement('div');
+  hint.className = 'zx-keys-hint';
+  hint.innerHTML = '<kbd>↑</kbd><kbd>↓</kbd><span>在板块之间漫游</span>';
+  document.body.appendChild(hint);
+  const goTo = dir => {
+    const y = scrollY + 2;
+    const tops = sections.map(s => s.offsetTop);
+    let target;
+    if (dir > 0) target = tops.find(t => t > y) ?? tops[tops.length - 1];
+    else target = [...tops].reverse().find(t => t < y - 2) ?? 0;
+    window.scrollTo({ top: target - 60, behavior: 'smooth' });
+  };
+  addEventListener('keydown', e => {
+    if (e.target.matches('input,textarea,[contenteditable]')) return;
+    if (e.key === 'ArrowDown' || e.key === 'j') { e.preventDefault(); goTo(1); }
+    if (e.key === 'ArrowUp' || e.key === 'k') { e.preventDefault(); goTo(-1); }
+  });
+  // 首次滚动后淡出提示
+  let shown = false;
+  const showHint = () => {
+    if (shown || scrollY < innerHeight * .3) return;
+    shown = true;
+    hint.classList.add('is-live');
+    setTimeout(() => hint.classList.remove('is-live'), 3800);
+    removeEventListener('scroll', showHint);
+  };
+  addEventListener('scroll', showHint, { passive: true });
+})();
+
+/* ---------- 3. 磁吸按钮：靠近指针时轻轻被吸引 ---------- */
+(() => {
+  if (matchMedia('(hover: none), (pointer: coarse)').matches) return;
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  qsa('.pill, .zealyn-hero .hero-download, .dl-card .hero-download').forEach(el => {
+    const strength = 16;
+    el.addEventListener('pointermove', e => {
+      const r = el.getBoundingClientRect();
+      const dx = e.clientX - (r.left + r.width / 2);
+      const dy = e.clientY - (r.top + r.height / 2);
+      el.style.transform = `translate(${(dx / r.width) * strength}px, ${(dy / r.height) * strength * .6}px)`;
+    });
+    el.addEventListener('pointerleave', () => {
+      el.style.transition = 'transform .55s cubic-bezier(.22,1.4,.36,1)';
+      el.style.transform = '';
+      setTimeout(() => (el.style.transition = ''), 560);
+    });
+  });
+})();
+
+/* ---------- 4. 板块进度点：右侧小圆点，点击直达 ---------- */
+(() => {
+  const sections = qsa('main#top > section[id]');
+  if (sections.length < 3 || innerWidth < 861) return;
+  const labels = {
+    overview: '开篇', ecosystem: '两大应用', duo: 'Zealyn Duo',
+    features: '能力导览', sonder: 'Sonder', craft: '幕后', download: '下载'
+  };
+  const rail = document.createElement('nav');
+  rail.className = 'zx-rail';
+  rail.setAttribute('aria-label', '板块导航');
+  rail.innerHTML = sections.map(s => `<a href="#${s.id}" data-label="${labels[s.id] || s.id}" aria-label="前往 ${labels[s.id] || s.id}"></a>`).join('');
+  document.body.appendChild(rail);
+  const dots = qsa('a', rail);
+  const lightSections = new Set(['ecosystem', 'sonder', 'features']);
+  const onScroll = () => {
+    const mid = scrollY + innerHeight / 2;
+    let active = 0;
+    sections.forEach((s, i) => { if (s.offsetTop <= mid) active = i; });
+    dots.forEach((d, i) => d.classList.toggle('is-active', i === active));
+    rail.classList.toggle('on-light', lightSections.has(sections[active].id));
+    document.body.classList.toggle('zx-rail-on', scrollY > innerHeight * .4);
+  };
+  addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();
+
+/* ---------- 5. 七模块概览态文案：返回概览后恢复完整标题 ---------- */
+(() => {
+  const tour = qs('.zx-modules .tour') || qs('.tour');
+  if (!tour) return;
+  const title = qs('#feature-title');
+  const copy = qs('#feature-copy');
+  if (!title || !copy) return;
+  const HOME = ['一个工作区，装下整个流程', '从任务拆解、素材编排到生成与交付——Duo 的每个模块，都是画布上的一块拼图。'];
+  new MutationObserver(() => {
+    if (!tour.classList.contains('is-feature-open')) {
+      title.textContent = HOME[0];
+      copy.textContent = HOME[1];
+    }
+  }).observe(tour, { attributes: true, attributeFilter: ['class'] });
+})();
