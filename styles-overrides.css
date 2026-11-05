@@ -2253,3 +2253,299 @@ main#top > #compare { order: 6; }
   box-shadow: 0 4px 12px rgba(0,0,0,.2), 0 1px 0 rgba(255,255,255,.2) inset;
   transition-duration: .12s;
 }
+
+/* ============================================================
+   Zealyn 双产品改版（2026-11）：Duo × Sonder 新增板块样式
+   只追加、不修改既有规则；回退时删除本段即可
+   ============================================================ */
+
+/* ---------- 生态总览：两大应用卡片 ---------- */
+.ecosystem {
+  background: #f5f5f7;
+  padding: clamp(96px, 12vw, 168px) 24px clamp(80px, 10vw, 144px);
+  color: #1d1d1f;
+}
+.ecosystem-heading {
+  max-width: 780px;
+  margin: 0 auto clamp(48px, 6vw, 88px);
+  text-align: center;
+}
+.ecosystem-heading .eyebrow {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: #6e6e73;
+  margin: 0 0 16px;
+}
+.ecosystem-heading h2 {
+  font-size: clamp(34px, 5vw, 60px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin: 0 0 20px;
+}
+.ecosystem-heading h2 em {
+  font-style: normal;
+  background: linear-gradient(100deg, #0071e3, #7d4cff 60%, #ff5f9e);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.ecosystem-lede {
+  font-size: clamp(16px, 1.5vw, 19px);
+  line-height: 1.7;
+  color: #6e6e73;
+  margin: 0;
+}
+.duo-cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 28px;
+  max-width: 1240px;
+  margin: 0 auto;
+}
+.duo-card {
+  position: relative;
+  background: #fff;
+  border-radius: 30px;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, .05), 0 24px 64px rgba(0, 0, 0, .07);
+  transition: transform .6s cubic-bezier(.22, 1, .36, 1), box-shadow .6s cubic-bezier(.22, 1, .36, 1);
+}
+.duo-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, .08), 0 40px 88px rgba(0, 0, 0, .12);
+}
+.duo-card-visual {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+}
+.duo-card-visual img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 1.2s cubic-bezier(.22, 1, .36, 1);
+}
+.duo-card:hover .duo-card-visual img { transform: scale(1.045); }
+.duo-card-visual::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 55%, rgba(0, 0, 0, .18));
+  pointer-events: none;
+}
+.duo-visual-agent { background: linear-gradient(135deg, #0a84ff, #5e5ce6); }
+.duo-visual-canvas { background: linear-gradient(135deg, #bf5af2, #ff375f); }
+.duo-card-copy { padding: clamp(28px, 3.4vw, 44px); }
+.duo-card-tag {
+  display: inline-block;
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  color: #0071e3;
+  background: rgba(0, 113, 227, .08);
+  border-radius: 999px;
+  padding: 6px 14px;
+  margin-bottom: 16px;
+}
+.duo-card-canvas .duo-card-tag { color: #bf5af2; background: rgba(191, 90, 242, .1); }
+.duo-card-copy h3 {
+  font-size: clamp(26px, 2.6vw, 34px);
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  margin: 0 0 12px;
+}
+.duo-card-copy > p {
+  font-size: 15.5px;
+  line-height: 1.75;
+  color: #515154;
+  margin: 0 0 18px;
+}
+.duo-points {
+  list-style: none;
+  margin: 0 0 24px;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+.duo-points li {
+  position: relative;
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: #1d1d1f;
+  padding-left: 22px;
+}
+.duo-points li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: .52em;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #0071e3, #7d4cff);
+}
+.duo-card-canvas .duo-points li::before { background: linear-gradient(135deg, #bf5af2, #ff375f); }
+.text-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #0071e3;
+  text-decoration: none;
+}
+.text-link b { font-weight: 600; transition: transform .3s ease; }
+.text-link:hover b { transform: translateX(4px); }
+
+/* ---------- 产品横幅：Zealyn Duo（深色）与 Sonder（浅色） ---------- */
+.product-band {
+  position: relative;
+  padding: clamp(96px, 12vw, 176px) 24px 0;
+  overflow: hidden;
+}
+.band-dark { background: #000; color: #f5f5f7; }
+.band-light { background: #f5f5f7; color: #1d1d1f; }
+.band-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1240px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: clamp(40px, 5vw, 80px);
+  align-items: center;
+}
+.band-kicker {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  margin: 0 0 18px;
+  background: linear-gradient(100deg, #0a84ff, #bf5af2);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.band-light .band-kicker { background: linear-gradient(100deg, #bf5af2, #ff375f); -webkit-background-clip: text; background-clip: text; }
+.band-copy h2 {
+  font-size: clamp(36px, 4.6vw, 58px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.08;
+  margin: 0 0 22px;
+}
+.band-copy h2 em { font-style: normal; opacity: .62; }
+.band-lede {
+  font-size: clamp(15.5px, 1.4vw, 18px);
+  line-height: 1.75;
+  margin: 0 0 32px;
+  color: inherit;
+  opacity: .74;
+}
+.band-actions { display: flex; flex-wrap: wrap; gap: 14px; }
+.pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15.5px;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 999px;
+  padding: 13px 26px;
+  transition: transform .35s cubic-bezier(.22, 1, .36, 1), box-shadow .35s ease, background .35s ease;
+}
+.pill:hover { transform: translateY(-2px); }
+.pill-light { background: #f5f5f7; color: #1d1d1f; }
+.pill-light:hover { box-shadow: 0 12px 32px rgba(245, 245, 247, .25); }
+.pill-ghost { border: 1.5px solid rgba(245, 245, 247, .4); color: #f5f5f7; }
+.pill-ghost:hover { border-color: rgba(245, 245, 247, .9); }
+.pill-dark { background: #1d1d1f; color: #f5f5f7; }
+.pill-dark:hover { box-shadow: 0 12px 32px rgba(0, 0, 0, .25); }
+.pill-ghost-dark { border: 1.5px solid rgba(29, 29, 31, .32); color: #1d1d1f; }
+.pill-ghost-dark:hover { border-color: rgba(29, 29, 31, .8); }
+.band-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+.band-tile {
+  border-radius: 22px;
+  padding: 24px 22px;
+  display: grid;
+  gap: 8px;
+  align-content: start;
+  transition: transform .5s cubic-bezier(.22, 1, .36, 1), border-color .5s ease;
+}
+.band-dark .band-tile {
+  background: rgba(255, 255, 255, .055);
+  border: 1px solid rgba(255, 255, 255, .09);
+}
+.band-light .band-tile {
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, .05);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, .04);
+}
+.band-tile:hover { transform: translateY(-4px); }
+.band-dark .band-tile:hover { border-color: rgba(255, 255, 255, .22); }
+.band-light .band-tile:hover { border-color: rgba(0, 0, 0, .14); }
+.band-tile strong { font-size: 16.5px; font-weight: 700; letter-spacing: -0.01em; }
+.band-tile span { font-size: 13.5px; line-height: 1.65; opacity: .66; }
+.band-media {
+  position: relative;
+  z-index: 1;
+  max-width: 1080px;
+  margin: clamp(56px, 7vw, 96px) auto 0;
+  border-radius: 28px 28px 0 0;
+  overflow: hidden;
+  box-shadow: 0 -12px 64px rgba(0, 0, 0, .28);
+}
+.band-light .band-media { box-shadow: 0 -12px 64px rgba(0, 0, 0, .12); }
+.band-media video, .band-media img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ---------- 响应式 ---------- */
+@media (max-width: 1024px) {
+  .band-inner { grid-template-columns: 1fr; }
+  .band-grid { max-width: 640px; }
+}
+@media (max-width: 860px) {
+  .duo-cards { grid-template-columns: 1fr; }
+}
+@media (max-width: 560px) {
+  .band-grid { grid-template-columns: 1fr; }
+  .band-actions .pill { flex: 1 1 auto; }
+  .ecosystem { padding-left: 18px; padding-right: 18px; }
+  .product-band { padding-left: 18px; padding-right: 18px; }
+}
+
+/* ---------- 入场动效 ---------- */
+@keyframes zealynRise {
+  from { opacity: 0; transform: translateY(28px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.duo-card, .band-tile, .band-copy, .band-media {
+  animation: zealynRise .9s cubic-bezier(.22, 1, .36, 1) both;
+  animation-timeline: view();
+  animation-range: entry 0% entry 60%;
+}
+@supports not (animation-timeline: view()) {
+  .duo-card, .band-tile, .band-copy, .band-media { animation: none; }
+}
+
+/* 新版块在 main 流式排序中的位置（覆盖默认 order:0） */
+main#top > #ecosystem { order: 1; }
+main#top > #overview { order: 0; }
+main#top > #capabilities { order: 2; }
+main#top > #canvas-showcase { order: 3; }
+main#top > #features { order: 4; }
+main#top > #duo { order: 5; }
+main#top > #sonder { order: 6; }
+main#top > #mac { order: 7; }
+main#top > #compare { order: 8; }

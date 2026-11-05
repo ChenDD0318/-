@@ -4,23 +4,23 @@ function showToast(message){toast.textContent=message;toast.classList.add('is-vi
 const wordmarkSrc='assets/brand/zealyn-wordmark.png';
 const createWordmark=(variant='dark')=>{const image=document.createElement('img');image.className=`brand-wordmark brand-wordmark-inline brand-wordmark--${variant}`;image.src=wordmarkSrc;image.alt='Zealyn';return image};
 const renderBrandText=(element,text,variant='dark')=>{if(!element)return;element.replaceChildren();text.split('Zealyn').forEach((part,index)=>{if(index)element.appendChild(createWordmark(variant));if(part)element.appendChild(document.createTextNode(part))})};
-const zealynNavigation=['创作','工作流','智能体','媒体','声音','资源','应用','案例','支持'];
+const zealynNavigation=['Zealyn Duo','智能体','画布','Sonder','图片创作','声音','资源','案例','支持'];
 qsa('.global-links a').forEach((link,index)=>{if(zealynNavigation[index])link.textContent=zealynNavigation[index]});
 const renameText=(selector,text,root=document)=>{const element=qs(selector,root);if(element)element.textContent=text};
-renameText('.hero-kicker','面向创作者与团队的多模态 AI 工作台');
-renameText('.hero-subtitle','用 Agent 拆解任务，在 Canvas 中连接提示词、图片、视频与声音，再把每一步推进到可交付的结果。');
-qsa('.hero-download span').forEach((label,index)=>{label.textContent=index%2===0?'下载 Windows 版':'下载 macOS 版'});
+renameText('.hero-kicker','一套生态，两款应用，覆盖创作的每一步');
+renameText('.hero-subtitle','Zealyn Duo 负责思考与编排——Agent 拆解任务，Canvas 连接素材；Sonder 专注生成与打磨——图片、视频、音乐与声音。从目标到成片，都在同一生态里完成。');
+qsa('.hero-download').forEach(link=>{const label=qs('span',link);if(label&&!qs('.os-icon',link))label.textContent=link.getAttribute('href')==='#sonder'?'探索 Sonder':'探索 Zealyn Duo'});
 renameText('.tour-intro .eyebrow','七个模块，连接一条流程');
 renameText('.tour-title','一个工作区，完成从策划到交付');
 const tourLede=qs('.tour-lede');if(tourLede)tourLede.textContent='Agent 负责拆解目标，Canvas 组织提示词与媒体素材；图片、视频、声音和自动成片模块接续处理，常用资产可在项目中集中管理。';
-renameText('.performance .eyebrow','平台基础');
+renameText('.performance .eyebrow','一套生态，两款应用');
 const performanceTitle=qs('.performance h2');if(performanceTitle?.firstChild)performanceTitle.firstChild.textContent='从任务拆解';
 renameText('.performance h2 em','到素材生成与交付');
 const performanceCopy=qs('.performance-heading>p:last-child');if(performanceCopy)performanceCopy.textContent='把项目目标交给 Agent 拆解，在 Canvas 中连接文本、图片、视频和声音模块。保存当前进度，后续可以继续编辑、复用已有素材并推进交付。';
 renameText('.performance-overlay strong','同一项目，接续每一步');
 const performanceOverlay=qs('.performance-overlay span');if(performanceOverlay)performanceOverlay.textContent='任务、素材和生成结果沿着工作流向下传递。';
-qsa('.stat-row strong').forEach((stat,index)=>{stat.textContent=['7','4','3'][index]||stat.textContent});
-qsa('.stat-row span').forEach((label,index)=>{label.textContent=['项创作模块','类媒体素材','种项目动作：保存、继续、复用'][index]||label.textContent});
+qsa('.stat-row strong').forEach((stat,index)=>{stat.textContent=['2','7','4'][index]||stat.textContent});
+qsa('.stat-row span').forEach((label,index)=>{label.textContent=['款创作应用：Duo 与 Sonder','项创作模块','类媒体素材'][index]||label.textContent});
 const cardsTitle=qs('.cards-section h2');if(cardsTitle?.firstChild)cardsTitle.firstChild.textContent='从输入素材，';
 renameText('.cards-section h2 em','到持续产出。');
 const highlightCopy=[
@@ -38,14 +38,14 @@ if(highlightImages[0])highlightImages[0].alt='真实创作工作室中的 Zealyn
 if(highlightImages[1])highlightImages[1].alt='团队在真实工作空间中协作使用 Zealyn';
 if(highlightImages[2])highlightImages[2].alt='创作团队在笔记本电脑上整理提示词与素材';
 if(highlightImages[3])highlightImages[3].alt='真实创作空间中的本地工作环境';
-const footerBreadcrumb=qsa('.footer-breadcrumb span');if(footerBreadcrumb[1])footerBreadcrumb[1].textContent='Zealyn';
+const footerBreadcrumb=qsa('.footer-breadcrumb span');if(footerBreadcrumb[1])footerBreadcrumb[1].textContent='Zealyn 创作平台';
 const footerLogo=qs('.footer-breadcrumb img');if(footerLogo){footerLogo.src=wordmarkSrc;footerLogo.classList.add('footer-wordmark');footerLogo.alt='Zealyn';}
 renameText('.footer-breadcrumb strong','官方创作平台');
 qsa('.footer-columns h4').forEach((heading,index)=>{heading.textContent=['了解 Zealyn','客户支持','关于 Zealyn'][index]||heading.textContent});
 qsa('.footer-columns a').forEach((link,index)=>{const labels=['概览','核心能力','工作流','功能支持','客户方案','系统状态','品牌故事','隐私与数据','安全与责任'];if(labels[index])link.textContent=labels[index]});
-const footerDownload=qs('.footer-download>span');if(footerDownload)footerDownload.textContent='选择你的 Zealyn 创作环境';
+const footerDownload=qs('.footer-download>span');if(footerDownload)footerDownload.textContent='下载 Zealyn 创作应用';
 const footerBottom=qs('.footer-bottom span');if(footerBottom)footerBottom.textContent='Copyright © 2026 Zealyn 保留所有权利。';
-qsa('.product-links a').forEach((link,index)=>{link.textContent=['概览','核心能力','应用场景','了解产品'][index]||link.textContent});
+qsa('.product-links a').forEach((link,index)=>{link.textContent=['概览','Zealyn Duo','Sonder','立即体验'][index]||link.textContent});
 const capabilityContent=[
   ['Agent 智能体','先写清要完成的事，再为 Agent 指定角色、连接项目文件与工具。它会把目标拆成可执行步骤，逐项推进；你可以随时查看计划、补充要求，再决定如何继续。'],
   ['Canvas 无限画布','提示词、参考图片、视频片段和声音素材可以放进同一张画布。把输入连接到生成步骤，清楚看到素材从哪里来、结果接到哪里；改动一个环节，也能沿着原流程继续创作。'],
@@ -54,10 +54,10 @@ const capabilityContent=[
 ];
 qsa('.showcase-progress .progress-dot').forEach((dot,index)=>{dot.setAttribute('aria-label',`第 ${index+1} 张：${capabilityContent[index]?.[0]||'核心能力'}`)});
 const showcaseMediaLabel=qs('.showcase-media');if(showcaseMediaLabel)showcaseMediaLabel.setAttribute('aria-label','左右滑动浏览 Zealyn 核心能力');
-qsa('.scroll-story-orbit').forEach((label,index)=>{label.textContent=['智能对话','Canvas 编排','图片创作','视频创作','自动成片'][index]||label.textContent});
-renameText('.scroll-story-kicker','创作工作流');
-renameText('.scroll-story-caption','先用对话明确目标，再把提示词、参考图、视频片段和声音放上 Canvas，连接成可以继续编辑与运行的创作流程。');
-const scrollStorySection=qs('.scroll-story');if(scrollStorySection)scrollStorySection.setAttribute('aria-label','Zealyn 创作工作流');
+qsa('.scroll-story-orbit').forEach((label,index)=>{label.textContent=['Agent 拆解','Canvas 编排','图片生成','视频与声音','导出交付'][index]||label.textContent});
+renameText('.scroll-story-kicker','双应用协作流');
+renameText('.scroll-story-caption','在 Duo 里把目标拆成步骤、把素材连成流程；在 Sonder 里生成图片、视频与声音。产出回到画布继续编排，直到成为可以交付的作品。');
+const scrollStorySection=qs('.scroll-story');if(scrollStorySection)scrollStorySection.setAttribute('aria-label','Zealyn 双应用协作流');
 const tourLabels=['Agent 协作','Canvas 编排','图片创作','视频创作','自动成片','旋律编译','提示词与资产'];
 const tourDetails=['设定角色与目标，再连接文件、插件和 Canvas，让 Agent 按步骤处理任务。','把提示词、图片、视频和声音放在画布上，用节点连接创作步骤。','输入文字并加入参考图，生成视觉方向后继续调整与编辑。','组合参考图、视频片段与音频，为画面补充动态表达。','导入素材文件夹，自动整理素材并生成可继续编辑的时间线初稿。','输入情绪、风格或歌词，生成声音并试听，再加入项目使用。','集中归档常用提示词、图片、视频、音频和项目文件，方便后续调用。'];
 qsa('.tour-control').forEach((control,index)=>{if(tourLabels[index]){renameText('.control-label',tourLabels[index],control);renameText('.control-detail',tourDetails[index],control)}});
