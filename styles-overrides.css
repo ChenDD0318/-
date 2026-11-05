@@ -2549,3 +2549,7 @@ main#top > #duo { order: 5; }
 main#top > #sonder { order: 6; }
 main#top > #mac { order: 7; }
 main#top > #compare { order: 8; }
+
+/* 顺序调整：#features 移到 #duo 之后 */
+main#top > #duo { order: 4; }
+main#top > #features { order: 5; }
