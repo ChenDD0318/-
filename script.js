@@ -163,6 +163,7 @@ tour?.addEventListener('keydown',event=>{
 qsa('a[href="#buy"],.model-card .buy-button').forEach(link=>link.addEventListener('click',e=>{if(link.classList.contains('product-buy')||link.closest('.hero-price')||link.closest('.model-card')){e.preventDefault();showToast('购买页面即将打开');setTimeout(()=>{if(link.closest('.hero-price'))qs('#buy')?.scrollIntoView({behavior:'smooth'});},300)}}));
 qsa('a[href="#top"]').forEach(link=>link.addEventListener('click',e=>{e.preventDefault();window.scrollTo({top:0,behavior:'smooth'})}));
 const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{entry.target.classList.toggle('in-view',entry.isIntersecting)}),{threshold:.22,rootMargin:'-5% 0px -8%'});
+qsa('.hero-copy,.tour-intro,.tour-grid,.performance-heading,.performance-art,.cards-heading,.highlight-card,.model-card').forEach(el=>observer.observe(el));
 
 // Horizontal gestures can switch feature panels; vertical wheel input stays
 // available for ordinary page scrolling across the full-bleed preview.
@@ -389,6 +390,7 @@ const applyBrandWordmarks=()=>{
     if(!textNode.nodeValue.includes('Zealyn'))return;
     const parent=textNode.parentElement;
     if(!parent||parent.closest('script,style,[data-brand-wordmark-ignore]'))return;
+    const variant=parent.closest('.global-header,.product-nav,.zealyn-hero,.showcase,.scroll-story,.tour,.cards-section,.performance-overlay,.band-dark,.zx-craft,.zx-download,.site-footer')?'light':'dark';
     renderBrandText(parent,textNode.nodeValue,variant);
   });
 };
